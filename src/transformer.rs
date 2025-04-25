@@ -17,8 +17,7 @@ use napi::Result;
 use oxc::allocator::{Allocator, CloneIn, Dummy};
 use oxc::allocator::{FromIn, Vec as AstVec};
 use oxc::ast::ast::{
-	Argument, Class, ClassElement, Decorator, Expression, MethodDefinitionKind, Program, Statement,
-	TSType, TSTypeParameterInstantiation,
+	Argument, Class, ClassElement, Decorator, Expression, MethodDefinitionKind, Statement, TSType,
 };
 use oxc::ast::{AstBuilder, NONE};
 use oxc::codegen::{Codegen, CodegenOptions};
@@ -110,7 +109,7 @@ impl ModuleTransformer {
 
 		let _ = Transformer::new(
 			&self.alloc,
-			&source_path,
+			source_path,
 			&TransformOptions {
 				cwd: source_dir,
 				env: EnvOptions::from_target("es2022").unwrap(),
@@ -133,7 +132,6 @@ impl ModuleTransformer {
 
 fn transform_module<'a>(mut result: ParserReturn<'a>, alloc: &'a Allocator) -> ParserReturn<'a> {
 	let entries = result.program.body.len();
-	let mut should_add_import = false;
 	let body = std::mem::replace(
 		&mut result.program.body,
 		oxc::allocator::Vec::with_capacity_in(entries, alloc),
@@ -187,13 +185,10 @@ fn extract_injectable_class_constructor<'b, 'a: 'b>(
 							Expression::Identifier(ident)
 								if ident.name.eq_ignore_ascii_case("alias") =>
 							{
-								match call.arguments.as_slice() {
-									[Argument::StringLiteral(lit)] => {
-										injects.push(lit.value.as_str().to_string());
-										had_alias = true;
-										return None;
-									}
-									_ => {}
+								if let [Argument::StringLiteral(lit)] = call.arguments.as_slice() {
+									injects.push(lit.value.as_str().to_string());
+									had_alias = true;
+									return None;
 								}
 							}
 							_ => {}
@@ -206,12 +201,9 @@ fn extract_injectable_class_constructor<'b, 'a: 'b>(
 
 			if !had_alias {
 				if let Some(annotation) = &item.pattern.type_annotation {
-					match annotation.type_annotation {
-						TSType::TSTypeReference(ref ref_type) => {
-							let name = format!("{}", ref_type.type_name);
-							injects.push(name);
-						}
-						_ => {}
+					if let TSType::TSTypeReference(ref ref_type) = annotation.type_annotation {
+						let name = format!("{}", ref_type.type_name);
+						injects.push(name);
 					}
 				}
 			}
@@ -236,7 +228,7 @@ fn extract_injectable_class_constructor<'b, 'a: 'b>(
 							None,
 						))
 					}),
-					&alloc,
+					alloc,
 				),
 				false,
 			),

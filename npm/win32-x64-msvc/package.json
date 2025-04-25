@@ -1,6 +1,10 @@
 {
   "name": "@moggie/runtime-win32-x64-msvc",
   "version": "0.0.0",
+  "repository": {
+    "url": "https://github.com/moggie-framework/runtime",
+    "type": "git"
+  },
   "os": [
     "win32"
   ],
@@ -11,8 +15,8 @@
   "files": [
     "runtime.win32-x64-msvc.node"
   ],
-  "license": "MIT",
+  "license": "Apache-2.0",
   "engines": {
-    "node": ">= 10"
+    "node": ">= 18"
   }
 }

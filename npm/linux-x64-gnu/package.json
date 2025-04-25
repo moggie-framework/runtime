@@ -1,6 +1,10 @@
 {
   "name": "@moggie/runtime-linux-x64-gnu",
   "version": "0.0.0",
+  "repository": {
+    "url": "https://github.com/moggie-framework/runtime",
+    "type": "git"
+  },
   "os": [
     "linux"
   ],
@@ -11,9 +15,9 @@
   "files": [
     "runtime.linux-x64-gnu.node"
   ],
-  "license": "MIT",
+  "license": "Apache-2.0",
   "engines": {
-    "node": ">= 10"
+    "node": ">= 18"
   },
   "libc": [
     "glibc"

@@ -1,6 +1,10 @@
 {
   "name": "@moggie/runtime-darwin-x64",
   "version": "0.0.0",
+  "repository": {
+    "url": "https://github.com/moggie-framework/runtime",
+    "type": "git"
+  },
   "os": [
     "darwin"
   ],
@@ -11,8 +15,8 @@
   "files": [
     "runtime.darwin-x64.node"
   ],
-  "license": "MIT",
+  "license": "Apache-2.0",
   "engines": {
-    "node": ">= 10"
+    "node": ">= 18"
   }
 }

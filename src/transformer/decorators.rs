@@ -17,14 +17,14 @@ use crate::transformer::polyfill::APPLY_CLASS_SIGIL;
 use crate::transformer::utils::{decl_variable, expr_string};
 use oxc::allocator::{Allocator, Box as AstBox, CloneIn, Dummy, Vec as AstVec};
 use oxc::ast::ast::{
-	Argument, ArrayExpressionElement, BindingPatternKind, Class, Declaration,
-	ExportDefaultDeclarationKind, Expression, Program, Statement, VariableDeclarationKind,
+	Argument, ArrayExpressionElement, Class, Declaration, ExportDefaultDeclarationKind, Expression,
+	Program, Statement,
 };
 use oxc::ast::{AstBuilder, NONE};
 use oxc::span::Span;
 
 pub fn transform_class_decorators<'b, 'a: 'b>(alloc: &'a Allocator, program: &'b mut Program<'a>) {
-	for mut statement in &mut program.body {
+	for statement in &mut program.body {
 		match statement {
 			Statement::ClassDeclaration(class) => {
 				if let Some(id) = class.id.as_ref() {
