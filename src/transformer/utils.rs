@@ -25,6 +25,7 @@ pub fn expr_string<'b, 'a: 'b>(alloc: &'a Allocator, value: &'b str) -> Expressi
 	builder.expression_string_literal(Span::dummy(alloc), Atom::from_in(value, alloc), None)
 }
 
+#[allow(unused)]
 pub fn expr_undefined<'b, 'a: 'b>(alloc: &'a Allocator) -> Expression<'a> {
 	let builder = AstBuilder::new(alloc);
 	builder.expression_identifier(Span::dummy(alloc), "undefined")

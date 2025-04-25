@@ -173,6 +173,7 @@ jobs:
         node:
           - '18'
           - '20'
+          - '22'
     runs-on: ${{ matrix.settings.host }}
     steps:
       - uses: actions/checkout@v4
@@ -209,6 +210,7 @@ jobs:
         node:
           - '18'
           - '20'
+          - '22'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -246,7 +248,7 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: yarn
       - name: Install dependencies
         run: yarn install
