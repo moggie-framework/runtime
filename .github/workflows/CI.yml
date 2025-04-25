@@ -99,11 +99,17 @@ jobs:
         run: ${{ matrix.settings.build }}
         if: ${{ !matrix.settings.docker }}
         shell: bash
-      - name: Upload artifact
+      - name: Upload artifact (native)
         uses: actions/upload-artifact@v4
         with:
           name: bindings-${{ matrix.settings.target }}
           path: ${{ env.APP_NAME }}.*.node
+          if-no-files-found: error
+      - name: Upload artifact (JS)
+        uses: actions/upload-artifact@v4
+        with:
+          name: index-${{ matrix.settings.target }}
+          path: index.*
           if-no-files-found: error
 #  build-freebsd:
 #    runs-on: macos-13
@@ -183,6 +189,11 @@ jobs:
         with:
           name: bindings-${{ matrix.settings.target }}
           path: .
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: index-${{ matrix.settings.target }}
+          path: .
       - name: List packages
         run: ls -R .
         shell: bash
@@ -213,6 +224,11 @@ jobs:
         with:
           name: bindings-x86_64-unknown-linux-gnu
           path: .
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: index-x86_64-unknown-linux-gnu
+          path: .
       - name: List packages
         run: ls -R .
         shell: bash
@@ -238,6 +254,11 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           path: artifacts
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: index-x86_64-unknown-linux-gnu
+          path: .
       - name: Move artifacts
         run: yarn artifacts
       - name: List packages
