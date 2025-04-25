@@ -2,6 +2,10 @@
 edition = "2021"
 name = "moggie_runtime"
 version = "0.1.0"
+description = "Node module loading tools for applying custom transforms to imported modules at runtime"
+repository = "https://github.com/moggie-framework/runtime.git"
+license-file = "LICENSE"
+license = "Apache-2.0"
 
 authors = [
     "Louis Capitanchik <louis@weirdboi.com>"
